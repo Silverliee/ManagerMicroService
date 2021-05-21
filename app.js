@@ -3,7 +3,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-
+const projectController = require('./Controller/ProjectController');
+const taskController = require('./Controller/TaskController');
+const userController = require('./Controller/UserController');
 
 //Mongoose initialisation
 mongoose.connect('mongodb+srv://mohamed:414498200@planode-zoo.yegdt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
 });
 
 // gestion des controllers
-
+app.use('/projects', projectController);
+app.use('/tasks', taskController);
+app.use('/users', userController);
 
 module.exports = app;
