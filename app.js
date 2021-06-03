@@ -8,7 +8,8 @@ const taskController = require('./Controller/TaskController');
 const userController = require('./Controller/UserController');
 
 //Mongoose initialisation
-mongoose.connect('mongodb+srv://mohamed:414498200@planode-zoo.yegdt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+const uri = require('./config.json').MONGO_URL;
+mongoose.connect( uri,
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true
