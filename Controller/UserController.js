@@ -9,6 +9,20 @@ router.get('/', async(req, res) => {
         .catch(error => res.status(400).json({error}));
 });
 
+//recupere l'id de l'utilisateur grâce a son email
+router.get('/id/:email', async(req, res) => {
+    await userModel.findOne({email: req.params.email})
+        .then(product => res.status(200).json(product.id))
+        .catch(error => res.status(404).json({error}));
+});
+
+//recupere les de l'utilisateur grâce a son id
+router.get('/rights/:id', async(req, res) => {
+    await userModel.findOne({_id: req.params.id})
+        .then(product => res.status(200).json(product.role))
+        .catch(error => res.status(404).json({error}));
+});
+
 router.get('/:id', async(req, res) => {
     await userModel.findOne({_id: req.params.id})
         .then(product => res.status(200).json(product))
@@ -28,7 +42,7 @@ router.post('/', async(req, res) => {
 router.post('/login', async(req, res) => {
     const user = await userModel.findOne({email: req.body.email})
     if(user === null) {
-        res.status(404).json({message: "Aucun employée ne possède cet email."})
+        res.status(404).json({message: "Aucun utilisateur ne possède cet email."})
     } else if(user.password !== req.body.password) {
         res.status(400).json({message: "Le mot de passe est incorrecte"})
     } else {
