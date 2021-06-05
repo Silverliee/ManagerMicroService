@@ -15,6 +15,13 @@ router.get('/:id', async(req, res) => {
         .catch(error => res.status(404).json({error}));
 });
 
+//retourne la liste des projets ou l'user est admin
+router.get('/user/:id', async(req, res) => {
+    await projectModel.find({admin_id: req.params.id})
+        .then(products => res.status(200).json(products))
+        .catch(error => res.status(404).json({error}));
+});
+
 // Post Request Here
 router.post('/', async(req, res) => {
     const project = new projectModel({
