@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {taskModel} = require('../Model/Task');
-const projectModel = require('../Model/Project');
-
 
 // Get Request Here
 router.get('/', async (req, res) => {
@@ -13,23 +11,19 @@ router.get('/', async (req, res) => {
 
 //recupere les tasks de l'utilisateur grâce a son id
 router.get('/user/:id', async (req, res) => {
-    await projectModel.find({"tasks.assigned_user_id": req.params.id})
+    const projectWithUserTask = await taskModel.find({assigned_user_id: req.params.id})
         .then(products => res.status(200).json(products))
         .catch(error => res.status(404).json({error}));
 });
 
-//Ajoute une task dans un project grace a l'id du project
-router.post('/:id/task', async (req, res) => {
+// POST Request Here
+router.post('/', async(req, res) => {
     const task = new taskModel({
         ...req.body
     });
-
-    const project = await projectModel.findOne({_id: req.params.id})
+    await task.save()
+        .then(() => res.status(201).json({message: "La tache à été créer !"}))
         .catch(error => res.status(400).json({error}));
-
-    await projectModel.updateOne({_id: req.params.id}, {tasks: task})
-        .then(() => res.status(200).json({message: "La tâche a bien été ajouté"}))
-        .catch(error => res.status(400).json({error}));
-
 });
+
 module.exports = router;

@@ -8,6 +8,7 @@ const taskSchema = new Schema({
 	created_at: String,
 	deadline: String,
 	assigned_user_id: String,
+	project_id:String
 });
 
 const taskModel = mongoose.model('Task', taskSchema);
