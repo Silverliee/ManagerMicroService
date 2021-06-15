@@ -4,7 +4,7 @@ const {Schema} = require('mongoose');
 const taskSchema = new Schema({
 	name: String,
 	description: String,
-	state: Number,
+	state: String,
 	created_at: String,
 	deadline: String,
 	assigned_user_id: String,

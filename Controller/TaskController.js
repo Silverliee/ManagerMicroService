@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         .catch(error => res.status(400).json({error}));
 });
 
-//recupere les tasks de l'utilisateur grâce a son id
+//recupere les tasks assigner à l'utilisateur grâce a son id
 router.get('/user/:id', async (req, res) => {
     const projectWithUserTask = await taskModel.find({assigned_user_id: req.params.id})
         .then(products => res.status(200).json(products))
