@@ -50,9 +50,22 @@ router.post('/', async(req, res) => {
 // Put resquest Here
 router.put('/:id', async(req, res) => {
     await taskModel.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
-        .then(() => res.status(201).json({message: "Le projet a bien été modifié"}))
+        .then(() => res.status(201).json({message: "La tache a bien été modifié"}))
         .catch(error => res.status(400).json({error}));
 });
+
+router.get('/:id/inprogress', async(req, res) => {
+    await taskModel.updateOne({_id: req.params.id}, {state:"IN PROGRESS", _id: req.params.id})
+        .then(() => res.status(201).json({message: "La tache a bien été modifié"}))
+        .catch(error => res.status(400).json({error}));
+});
+
+router.get('/:id/finish', async(req, res) => {
+    await taskModel.updateOne({_id: req.params.id}, {state:"FINISH", _id: req.params.id})
+        .then(() => res.status(201).json({message: "La tache a bien été modifié"}))
+        .catch(error => res.status(400).json({error}));
+});
+
 
 //Delete Request here
 router.delete('/:id', async(req, res) => {
