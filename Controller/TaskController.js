@@ -16,6 +16,13 @@ router.get('/user/:id', async (req, res) => {
         .catch(error => res.status(404).json({error}));
 });
 
+//recupere les tasks grace a l' id d'un projet
+router.get('/project/:id', async (req, res) => {
+    await taskModel.find({project_id: req.params.id})
+        .then(products => res.status(200).json(products))
+        .catch(error => res.status(404).json({error}));
+});
+
 //recupere les tasks CREATED assigner à l'utilisateur grâce a son id
 router.get('/user/created/:id', async (req, res) => {
     await taskModel.find({assigned_user_id: req.params.id, state:"CREATED"})
@@ -50,6 +57,12 @@ router.post('/', async(req, res) => {
 // Put resquest Here
 router.put('/:id', async(req, res) => {
     await taskModel.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
+        .then(() => res.status(201).json({message: "La tache a bien été modifié"}))
+        .catch(error => res.status(400).json({error}));
+});
+
+router.get('/assigned/:id/:userid', async(req, res) => {
+    await taskModel.updateOne({_id: req.params.id}, {assigned_user_id:req.params.userid})
         .then(() => res.status(201).json({message: "La tache a bien été modifié"}))
         .catch(error => res.status(400).json({error}));
 });
