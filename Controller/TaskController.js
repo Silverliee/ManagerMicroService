@@ -54,6 +54,27 @@ router.get('/user/finish/:id', async (req, res) => {
         .catch(error => res.status(404).json({error}));
 });
 
+//recupere les tasks CREATED assigner à l'utilisateur grâce a son id
+router.get('/created', async (req, res) => {
+    await taskModel.find({state: "CREATED"})
+        .then(products => res.status(200).json(products))
+        .catch(error => res.status(404).json({error}));
+});
+
+//recupere les tasks IN PROGRESS assigner à l'utilisateur grâce a son id
+router.get('/inprogress', async (req, res) => {
+    await taskModel.find({state: "IN PROGRESS"})
+        .then(products => res.status(200).json(products))
+        .catch(error => res.status(404).json({error}));
+});
+
+//recupere les tasks FINISH assigner à l'utilisateur grâce a son id
+router.get('/finish', async (req, res) => {
+    await taskModel.find({state: "FINISH"})
+        .then(products => res.status(200).json(products))
+        .catch(error => res.status(404).json({error}));
+});
+
 // POST Request Here
 router.post('/', async (req, res) => {
     const task = new taskModel({
