@@ -113,7 +113,7 @@ router.get('/:id/finish', async (req, res) => {
 
 //Delete Request here
 router.delete('/:id', async (req, res) => {
-    await projectModel.deleteOne({_id: req.params.id})
+    await taskModel.deleteOne({_id: req.params.id})
         .then(() => res.status(200).json({message: "Le projet a bien été supprimé"}))
         .catch(error => res.status(400).json({error}));
 });
